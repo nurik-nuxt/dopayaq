@@ -3,4 +3,5 @@
 html,body {
     font-family: 'Bebas Neue';
     margin: 0 !important;
+    position: absolute;
 }

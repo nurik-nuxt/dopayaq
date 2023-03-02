@@ -13,8 +13,8 @@
         </svg>
         <h1>Play like a <h1 style="color: #4E4BF2">champion</h1></h1>
         <div style="display: flex; margin-top: 45px; justify-content: center">
-          <button style="margin-right: 51px" class="home_wrapper-btn">Join</button>
-          <button class="home_wrapper-btn">Login</button>
+          <button style="margin-right: 51px" class="home_wrapper-btn" @click="goToRegistration">Join</button>
+          <button class="home_wrapper-btn" @click="goToLogin">Login</button>
         </div>
       </div>
         <img src="../assets/player.png">
@@ -59,7 +59,7 @@
         <h1>be aware of football events around</h1>
         <p>With our user-friendly interface, you can easily create an account and start searching for available events in your area. Whether you're looking for a one-time game or a long-term team to join, our platform has something for everyone.</p>
         <p>Plus, with our messaging system, you can communicate with potential players or teams to ensure a great match. Don't wait any longer to get in on the action - sign up for our platform today!</p>
-        <button class="home_wrapper-btn">Join</button>
+        <button class="home_wrapper-btn" @click="goToRegistration">Join</button>
       </div>
     </div>
     <div class="home_wrapper__footer">
@@ -102,6 +102,14 @@ export default {
   data(){
     return {
       title: 'Landing Page'
+    }
+  },
+  methods: {
+    goToRegistration() {
+      this.$router.push('/signup')
+    },
+    goToLogin() {
+      this.$router.push('/signin')
     }
   }
 }

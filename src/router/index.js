@@ -6,6 +6,7 @@ import home from "@/views/home"
 import Registration from "@/views/auth/registration";
 import Login from "@/views/auth/login";
 import Events from "@/views/events";
+import Event from "@/views/events/event";
 
 Vue.use(Router)
 
@@ -32,6 +33,11 @@ const router = new Router({
             path: '/events',
             name: 'events',
             component: Events
+        },
+        {
+            path: '/event/:id',
+            name: 'event',
+            component: Event
         }
     ]
 })

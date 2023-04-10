@@ -6,10 +6,6 @@
       <div class="events-wrapper__filters">
         <div>
           <span class="events-wrapper__filters__filter">Filter By</span>
-<!--          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-<!--            <rect width="40" height="40" fill="black"/>-->
-<!--            <path d="M10.1813 15.5437L10.2937 15.675L18.7937 25.4562C19.0813 25.7875 19.5125 25.9937 19.9937 25.9937C20.475 25.9937 20.9062 25.7812 21.1938 25.4562L29.6875 15.6938L29.8312 15.5312C29.9375 15.375 30 15.1875 30 14.9875C30 14.4438 29.5375 14 28.9625 14H11.0375C10.4625 14 10 14.4438 10 14.9875C10 15.1938 10.0688 15.3875 10.1813 15.5437Z" fill="white"/>-->
-<!--          </svg>-->
         </div>
         <div class="events-wrapper__filters__input">
           <input

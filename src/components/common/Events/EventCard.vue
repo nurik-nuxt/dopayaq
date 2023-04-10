@@ -31,7 +31,7 @@
       </span>
     </div>
     <div style="margin: auto">
-      <button class="event-card--btn">Open</button>
+      <button class="event-card--btn" @click="goToEvent">Open</button>
     </div>
   </div>
 </template>
@@ -55,6 +55,11 @@ export default {
     organizer: {
       type: String,
       default: 'IT Departure'
+    }
+  },
+  methods: {
+    goToEvent() {
+      this.$router.push(`/event/1`)
     }
   }
 }

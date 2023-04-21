@@ -1,17 +1,28 @@
 <template>
   <div class="base-input">
-    <input class="base-input__input" :placeholder="placeholder"/>
+    <input class="base-input__input" :type="type" :value="value" :placeholder="placeholder" @input="handleInput"/>
   </div>
 </template>
 
 <script>
 export default {
+  // props:['value'],
   name: 'BaseTextField',
+  methods: {
+    handleInput(e) {
+      this.$emit('input', e.target.value)
+    }
+  },
   props: {
     placeholder: {
       type: String,
       default: "sdfd"
-    }
+    },
+    value:{
+      type:String
+    },
+    type: String,
+    default: 'text'
   }
 }
 </script>

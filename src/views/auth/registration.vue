@@ -14,11 +14,11 @@
       </div>
       <div class="form_wrapper__body">
         <h1>Registration</h1>
-        <BaseTextField :placeholder="'name'"/>
-        <BaseTextField :placeholder="'email'"/>
-        <BaseTextField :placeholder="'password'"/>
-        <BaseTextField :placeholder="'confirm password'"/>
-        <button class="form_wrapper__btn">Register</button>
+        <BaseTextField v-model="form.name" :placeholder="'name'"/>
+        <BaseTextField v-model="form.email" :placeholder="'email'"/>
+        <BaseTextField type="password" v-model="form.password" :placeholder="'password'"/>
+        <BaseTextField type="password" v-model="form.password_confirm" :placeholder="'confirm password'"/>
+        <button class="form_wrapper__btn" @click="signUp">Register</button>
       </div>
     </div>
   </div>
@@ -26,10 +26,36 @@
 
 <script>
 import BaseTextField from "@/components/base/BaseTextField";
+import axios from "axios";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name:'Registration',
-  components: {BaseTextField}
+  components: {BaseTextField},
+  data() {
+    return {
+      form: {
+        email: null,
+        name: null,
+        password: null,
+        password_confirm: null
+      }
+    }
+  },
+  methods: {
+    async signUp() {
+      try {
+        return await axios.post(process.env.VUE_APP_BASE_API + '/v1/profile/register',this.form).then((res) => {
+          console.log(res)
+          this.$router.push('/signin')
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  },
+  mounted() {
+    console.log(process.env.VUE_APP_BASE_API)
+  }
 }
 </script>
 

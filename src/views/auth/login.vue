@@ -14,9 +14,9 @@
       </div>
       <div class="form_wrapper__body">
         <h1>Log in</h1>
-        <BaseTextField :placeholder="'email'"/>
-        <BaseTextField :placeholder="'password'"/>
-        <button class="form_wrapper__btn">Sign In</button>
+        <BaseTextField v-model="form.email" :placeholder="'email'"/>
+        <BaseTextField type="password" v-model="form.password" :placeholder="'password'"/>
+        <button class="form_wrapper__btn" @click="login">Sign In</button>
       </div>
     </div>
   </div>
@@ -24,10 +24,31 @@
 
 <script>
 import BaseTextField from "@/components/base/BaseTextField";
+import axios from "axios";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name:'Login',
-  components: {BaseTextField}
+  components: {BaseTextField},
+  data() {
+    return {
+      form: {
+        email: '',
+        password: ''
+      }
+    }
+  },
+  methods: {
+    async login() {
+      try {
+        return await axios.post(process.env.VUE_APP_BASE_API + '/v1/profile/login',this.form).then((res) => {
+          console.log(res)
+          this.$router.push('/events')
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  }
 }
 </script>
 

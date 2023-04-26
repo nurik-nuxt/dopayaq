@@ -1,6 +1,6 @@
 <template>
   <div class="base-input">
-    <input class="base-input__input" :type="type" :value="value" :placeholder="placeholder" @input="handleInput"/>
+    <input class="base-input__input" :type="type" autocomplete="off" :value="value" :placeholder="placeholder" @input="handleInput"/>
   </div>
 </template>
 
@@ -39,10 +39,13 @@ export default {
     height: 62px;
     width: 343px;
     &::placeholder {
-      text-align: center;
+      font-family: 'Saira Condensed';
+      font-style: normal;
+      font-weight: 400;
       font-size: 40px;
-      //line-height: 50px;
-      text-transform: uppercase;
+      line-height: 110%;
+      text-align: center;
+      text-transform: capitalize;
       color: #3E3838;
     }
   }

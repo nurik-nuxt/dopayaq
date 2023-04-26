@@ -21,23 +21,26 @@
       </span>
     </div>
     <div class="header_wrapper__profile">
-      <svg width="55" height="55" viewBox="0 0 55 55" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g clip-path="url(#clip0_77_55)">
-          <path d="M27.5 53.2812C41.7386 53.2812 53.2812 41.7386 53.2812 27.5C53.2812 13.2614 41.7386 1.71875 27.5 1.71875C13.2614 1.71875 1.71875 13.2614 1.71875 27.5C1.71875 41.7386 13.2614 53.2812 27.5 53.2812Z" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linejoin="round"/>
-          <path d="M44.6875 46.4062C44.6875 36.9136 36.9927 29.2188 27.5 29.2188C18.0073 29.2188 10.3125 36.9136 10.3125 46.4062" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linejoin="round"/>
-          <path d="M27.5 29.2188C33.1954 29.2188 37.8125 24.6017 37.8125 18.9062C37.8125 13.2108 33.1954 8.59375 27.5 8.59375C21.8046 8.59375 17.1875 13.2108 17.1875 18.9062C17.1875 24.6017 21.8046 29.2188 27.5 29.2188Z" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linejoin="round"/>
-        </g>
-        <defs>
-          <clipPath id="clip0_77_55">
-            <rect width="55" height="55" fill="white"/>
-          </clipPath>
-        </defs>
-      </svg>
+      <button class="header_wrapper--btn" @click="logout">Logout</button>
+      <!--      <svg width="55" height="55" viewBox="0 0 55 55" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--        <g clip-path="url(#clip0_77_55)">-->
+<!--          <path d="M27.5 53.2812C41.7386 53.2812 53.2812 41.7386 53.2812 27.5C53.2812 13.2614 41.7386 1.71875 27.5 1.71875C13.2614 1.71875 1.71875 13.2614 1.71875 27.5C1.71875 41.7386 13.2614 53.2812 27.5 53.2812Z" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linejoin="round"/>-->
+<!--          <path d="M44.6875 46.4062C44.6875 36.9136 36.9927 29.2188 27.5 29.2188C18.0073 29.2188 10.3125 36.9136 10.3125 46.4062" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linejoin="round"/>-->
+<!--          <path d="M27.5 29.2188C33.1954 29.2188 37.8125 24.6017 37.8125 18.9062C37.8125 13.2108 33.1954 8.59375 27.5 8.59375C21.8046 8.59375 17.1875 13.2108 17.1875 18.9062C17.1875 24.6017 21.8046 29.2188 27.5 29.2188Z" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linejoin="round"/>-->
+<!--        </g>-->
+<!--        <defs>-->
+<!--          <clipPath id="clip0_77_55">-->
+<!--            <rect width="55" height="55" fill="white"/>-->
+<!--          </clipPath>-->
+<!--        </defs>-->
+<!--      </svg>-->
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: 'EventHeader',
   data() {
@@ -57,6 +60,12 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    async logout() {
+      let response = axios.get(process.env.VUE_APP_BASE_API + '/v1/profile/login')
+      console.log(response)
+    }
   }
 }
 </script>
@@ -70,6 +79,8 @@ export default {
   padding: 30px 160px;
   &__profile {
     margin-left: 56px;
+    display: flex;
+    align-items: center;
   }
   &__menu {
     margin-left: auto;
@@ -88,6 +99,20 @@ export default {
       }
 
     }
+  }
+  &--btn {
+    padding: 10px;
+    background: #4E4BF2;
+    border:none;
+    font-family: 'Saira Condensed';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 110%;
+    text-align: center;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    cursor: pointer;
   }
 }
 </style>

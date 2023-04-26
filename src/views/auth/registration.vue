@@ -14,10 +14,10 @@
       </div>
       <div class="form_wrapper__body">
         <h1>Registration</h1>
-        <BaseTextField v-model="form.name" :placeholder="'name'"/>
-        <BaseTextField v-model="form.email" :placeholder="'email'"/>
-        <BaseTextField type="password" v-model="form.password" :placeholder="'password'"/>
-        <BaseTextField type="password" v-model="form.password_confirm" :placeholder="'confirm password'"/>
+        <BaseTextField v-model="form.name" autocomplete="off" :placeholder="'name'"/>
+        <BaseTextField v-model="form.email" autocomplete="off" :placeholder="'email'"/>
+        <BaseTextField type="password" autocomplete="off" v-model="form.password" :placeholder="'password'"/>
+        <BaseTextField type="password" autocomplete="off" v-model="form.password_confirm" :placeholder="'confirm password'"/>
         <button class="form_wrapper__btn" @click="signUp">Register</button>
       </div>
     </div>

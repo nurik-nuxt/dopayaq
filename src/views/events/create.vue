@@ -2,26 +2,14 @@
   <div style="background: #F5F5F5;">
     <EventHeader/>
     <div class="events-wrapper">
-      <h1 class="events-wrapper--title">Find events</h1>
-      <div class="events-wrapper__filters">
-        <div>
-          <span class="events-wrapper__filters__filter">Filter By</span>
-        </div>
-        <div class="events-wrapper__filters__input">
-          <input
-              placeholder="Search"
-          >
-        </div>
-        <button class="events-wrapper--btn" @click="createEvent">Create</button>
-      </div>
-      <div class="events-wrapper__eventList">
-        <EventCard
-            v-for="(event, index) in events"
-            :key="index"
-            :event-title="event.name"
-            :location="event.location"
-            :date="event.started_at"
-        />
+      <h1 class="events-wrapper--title">Create Event</h1>
+      <div style="display: flex; flex-direction: column; justify-content: center">
+        <BaseTextField v-model="form.name" placeholder="Event’s Name"/>
+        <BaseTextField v-model="form.started_at" placeholder="Date"/>
+        <BaseTextField v-model="form.format" placeholder="Format"/>
+        <BaseTextField v-model="form.location" placeholder="Location"/>
+        <BaseTextField v-model="form.description" placeholder="Description"/>
+        <button class="events-wrapper--btn" @click="createEvent">Save</button>
       </div>
     </div>
     <EventFooter/>
@@ -37,29 +25,29 @@ import axios from "axios";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Events',
+  components: {BaseTextField, EventFooter, EventCard, EventHeader},
   data() {
     return {
-      events: []
-    }
-  },
-  // eslint-disable-next-line vue/no-unused-components
-  components: {BaseTextField, EventFooter, EventCard, EventHeader},
-  methods: {
-    createEvent() {
-      this.$router.push('/events/create')
-    },
-    async fetchEvents() {
-      console.log("Fetch Events")
-      try {
-        const events = await axios.get(process.env.VUE_APP_BASE_API + '/v1/event')
-        this.events = events.data
-      } catch (e) {
-        console.log(e)
+      form: {
+        name: '',
+        started_at: '',
+        format: '',
+        location: '',
+        description: ''
       }
     }
   },
-  mounted() {
-    this.fetchEvents()
+  methods: {
+    async createEvent() {
+      this.form.format = +this.form.format
+      return await axios.post(process.env.VUE_APP_BASE_API + '/v1/event',this.form, {
+        headers: {
+          Authorization: `Bearer ${this.$cookies.get('jwt')}`,
+        }
+      }).then(() => {
+        this.$router.push('/events')
+      })
+    }
   }
 }
 </script>
@@ -67,7 +55,7 @@ export default {
 <style scoped lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Inter&family=Saira+Condensed:wght@700&display=swap');
 .events-wrapper {
-  padding: 35px 160px 50px;
+  //padding: 35px 160px 50px;
   &--title {
     font-family: 'Saira Condensed';
     font-style: normal;
@@ -155,18 +143,20 @@ export default {
     }
   }
   &--btn  {
-      padding: 10px;
-      background: #4E4BF2;
-      border:none;
-      font-family: 'Saira Condensed';
-      font-style: normal;
-      font-weight: 700;
-      font-size: 24px;
-      line-height: 110%;
-      text-align: center;
-      text-transform: uppercase;
-      color: #FFFFFF;
-      cursor: pointer;
-    }
+    padding: 10px;
+    background: #4E4BF2;
+    border:none;
+    font-family: 'Saira Condensed';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 110%;
+    text-align: center;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    cursor: pointer;
+    margin: 35px auto;
+    max-width: 70px;
+  }
 }
 </style>

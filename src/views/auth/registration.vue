@@ -14,7 +14,7 @@
       </div>
       <div class="form_wrapper__body">
         <h1>Registration</h1>
-        <BaseTextField v-model="form.name" autocomplete="off" :placeholder="'name'"/>
+        <BaseTextField v-model="form.first_name" autocomplete="off" :placeholder="'name'"/>
         <BaseTextField v-model="form.email" autocomplete="off" :placeholder="'email'"/>
         <BaseTextField type="password" autocomplete="off" v-model="form.password" :placeholder="'password'"/>
         <BaseTextField type="password" autocomplete="off" v-model="form.password_confirm" :placeholder="'confirm password'"/>
@@ -35,7 +35,7 @@ export default {
     return {
       form: {
         email: null,
-        name: null,
+        first_name: null,
         password: null,
         password_confirm: null
       }

@@ -40,9 +40,15 @@ export default {
   methods: {
     async login() {
       try {
-        return await axios.post(process.env.VUE_APP_BASE_API + '/v1/profile/login',this.form).then((res) => {
-          console.log(res)
-          this.$router.push('/events')
+        return await axios.post(process.env.VUE_APP_BASE_API + '/v1/profile/login',this.form).then( async(res) => {
+          console.log(res.data.token)
+          this.$cookies.set('jwt', res.data.token)
+          await this.$router.push('/events')
+          return await axios.get(process.env.VUE_APP_BASE_API + '/v1/profile',{
+            headers: {
+              Authorization: `Bearer ${this.$cookies.get('jwt')}`,
+            }
+          })
         })
       } catch (e) {
         console.log(e)

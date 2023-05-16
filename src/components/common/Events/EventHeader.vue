@@ -1,6 +1,6 @@
 <template>
   <div class="header_wrapper">
-    <div class="header_wrapper__logo">
+    <div @click="goToMain" class="header_wrapper__logo">
       <svg width="230" height="55" viewBox="0 0 230 55" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M2.4375 8.16406C2.4375 8.85156 3.00625 9.45312 3.65625 9.45312C4.30625 9.45312 4.875 8.85156 4.875 8.16406C4.875 7.47656 4.30625 6.875 3.65625 6.875C3.00625 6.875 2.4375 7.47656 2.4375 8.16406Z" fill="#4E4BF2"/>
         <path d="M8.9375 8.07812C8.9375 9.10938 11.05 9.36719 19.5813 9.625C29.9813 9.88281 30.225 9.96875 32.0938 12.2031C33.2313 13.6641 34.9375 14.6094 36.6438 14.7812C40.1375 15.125 43.4688 19.8516 42.6563 23.2031C41.925 25.9531 41.925 29.0469 42.6563 31.7969C43.3875 34.8906 40.1375 39.875 36.9688 40.2188C35.6688 40.3906 33.3938 41.6797 31.85 43.0547C29.1688 45.5469 29.1688 45.5469 18.2813 45.5469C9.1 45.5469 7.3125 45.7188 7.3125 46.8359C7.3125 47.9531 9.1 48.125 18.3625 48.125C32.175 48.125 34.9375 47.3516 40.2188 41.6797C48.5063 33 48.5063 22 40.2188 13.3203C35.0188 7.73438 32.0938 6.875 19.175 6.875C10.8875 6.875 8.9375 7.13281 8.9375 8.07812Z" fill="#4E4BF2"/>
@@ -22,18 +22,6 @@
     </div>
     <div class="header_wrapper__profile">
       <button class="header_wrapper--btn" @click="logout">Logout</button>
-      <!--      <svg width="55" height="55" viewBox="0 0 55 55" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-<!--        <g clip-path="url(#clip0_77_55)">-->
-<!--          <path d="M27.5 53.2812C41.7386 53.2812 53.2812 41.7386 53.2812 27.5C53.2812 13.2614 41.7386 1.71875 27.5 1.71875C13.2614 1.71875 1.71875 13.2614 1.71875 27.5C1.71875 41.7386 13.2614 53.2812 27.5 53.2812Z" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linejoin="round"/>-->
-<!--          <path d="M44.6875 46.4062C44.6875 36.9136 36.9927 29.2188 27.5 29.2188C18.0073 29.2188 10.3125 36.9136 10.3125 46.4062" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linejoin="round"/>-->
-<!--          <path d="M27.5 29.2188C33.1954 29.2188 37.8125 24.6017 37.8125 18.9062C37.8125 13.2108 33.1954 8.59375 27.5 8.59375C21.8046 8.59375 17.1875 13.2108 17.1875 18.9062C17.1875 24.6017 21.8046 29.2188 27.5 29.2188Z" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linejoin="round"/>-->
-<!--        </g>-->
-<!--        <defs>-->
-<!--          <clipPath id="clip0_77_55">-->
-<!--            <rect width="55" height="55" fill="white"/>-->
-<!--          </clipPath>-->
-<!--        </defs>-->
-<!--      </svg>-->
     </div>
   </div>
 </template>
@@ -63,8 +51,16 @@ export default {
   },
   methods: {
     async logout() {
-      let response = axios.get(process.env.VUE_APP_BASE_API + '/v1/profile/login')
-      console.log(response)
+      return  await axios.get(process.env.VUE_APP_BASE_API + '/v1/profile/logout', {
+        headers: {
+          Authorization: `Bearer ${this.$cookies.get('jwt')}`,
+        }
+      }).then(() => {
+        this.$router.push('/')
+      })
+    },
+    goToMain() {
+      this.$router.push('/')
     }
   }
 }
@@ -77,6 +73,9 @@ export default {
   display: flex;
   flex-direction: row;
   padding: 30px 160px;
+  &__logo {
+    cursor: pointer;
+  }
   &__profile {
     margin-left: 56px;
     display: flex;

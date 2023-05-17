@@ -55,11 +55,15 @@ export default {
     organizer: {
       type: String,
       default: 'IT Departure'
+    },
+    id: {
+      type: Number,
+      default: 1
     }
   },
   methods: {
     goToEvent() {
-      this.$router.push(`/event/1`)
+      this.$router.push(`/event/${this.id}`)
     }
   }
 }

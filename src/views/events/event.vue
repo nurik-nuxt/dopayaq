@@ -2,14 +2,14 @@
   <div style="background: #F5F5F5;">
     <EventHeader/>
     <div class="events-wrapper">
-      <h1 class="events-wrapper--title">Nauryz Friendly</h1>
+      <h1 class="events-wrapper--title">{{ event.name }}</h1>
       <div class="events-wrapper__event">
         <div class="events-wrapper__event__info">
           <div class="events-wrapper__event__item">
             <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M43.75 43.75C43.75 43.75 43.75 41.1719 43.5352 39.8242C43.3594 38.7598 41.8848 37.3535 35.6152 35.0488C29.4434 32.7832 29.8242 33.8867 29.8242 29.7168C29.8242 27.0117 31.2012 28.584 32.0801 23.4473C32.4219 21.4258 32.6953 22.7734 33.4375 19.5312C33.8281 17.832 33.1738 17.7051 33.252 16.8945C33.3301 16.084 33.4082 15.3613 33.5547 13.7012C33.7305 11.6504 31.8262 6.25 25 6.25C18.1738 6.25 16.2695 11.6504 16.4551 13.7109C16.6016 15.3613 16.6797 16.0938 16.7578 16.9043C16.8359 17.7148 16.1816 17.8418 16.5723 19.541C17.3145 22.7734 17.5879 21.4258 17.9297 23.457C18.8086 28.5938 20.1855 27.0215 20.1855 29.7266C20.1855 33.9062 20.5664 32.8027 14.3945 35.0586C8.125 37.3535 6.64063 38.7695 6.47461 39.834C6.25 41.1719 6.25 43.75 6.25 43.75H25H43.75Z" fill="black"/>
             </svg>
-            <span style="color: #4E4BF2">Organiser Name</span>
+            <span style="color: #4E4BF2">IT Departure</span>
           </div>
           <div class="events-wrapper__event__item">
             <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -22,7 +22,7 @@
                 </clipPath>
               </defs>
             </svg>
-            <span>Location street</span>
+            <span>{{ event.location }}</span>
           </div>
           <div class="events-wrapper__event__item">
             <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -30,7 +30,7 @@
               <path d="M17.1875 9.375C17.1875 11.1035 15.791 12.5 14.0625 12.5C12.334 12.5 10.9375 11.1035 10.9375 9.375V6.25C10.9375 4.52148 12.334 3.125 14.0625 3.125C15.791 3.125 17.1875 4.52148 17.1875 6.25V9.375Z" fill="black"/>
               <path d="M39.0625 9.375C39.0625 11.1035 37.666 12.5 35.9375 12.5C34.209 12.5 32.8125 11.1035 32.8125 9.375V6.25C32.8125 4.52148 34.209 3.125 35.9375 3.125C37.666 3.125 39.0625 4.52148 39.0625 6.25V9.375Z" fill="black"/>
             </svg>
-            <span>dd/mm/yyyy 00:00</span>
+            <span>{{ event.start_date }}</span>
           </div>
           <div class="events-wrapper__event__item">
             <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -45,11 +45,11 @@
                 </clipPath>
               </defs>
             </svg>
-            <span>5x5</span>
+            <span>{{ event.format }}x{{ event.format }}</span>
           </div>
           <div class="events-wrapper__event__item">
             <div
-                v-for="n in 8"
+                v-for="n in event.format"
                 :key="n"
                 class="person-icon"
             >
@@ -66,7 +66,7 @@
               </svg>
             </div>
             <div class="person-icon"
-                v-for="n in 2"
+                v-for="n in (10 - event.format )"
                 :key="n"
             >
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -76,12 +76,15 @@
           </div>
           <div class="events-wrapper__event__description">
             <span>Description:</span>
-            <p>A friendly game to celebrate Nauryz. Equipment is ready,<br> searching for few more players.</p>
+            <p>{{ event.description }}</p>
           </div>
         </div>
         <div class="events-wrapper__image">
           <img src="../../assets/map.jpeg">
         </div>
+      </div>
+      <div style="display: flex; justify-content: center">
+        <button class="btn" @click="inviteEvent(event.id)">Invite</button>
       </div>
     </div>
     <EventFooter/>
@@ -91,9 +94,51 @@
 <script>
 import EventHeader from "@/components/common/Events/EventHeader";
 import EventFooter from "@/components/common/Events/EventFooter";
+import axios from "axios";
 export default {
   name: 'Event',
+  data() {
+    return {
+      event: {}
+    }
+  },
+  computed: {
+    id() {
+      return this.$route.params.id
+    }
+  },
   components: {EventFooter, EventHeader},
+  methods: {
+    async fetchEventById(id) {
+      try {
+        const event = await axios.get(process.env.VUE_APP_BASE_API + `/v1/event/${id}`,{
+          headers: {
+            Authorization: `Bearer ${this.$cookies.get('jwt')}`,
+          }
+        })
+        this.event = event.data
+        console.log(event)
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    async inviteEvent(id) {
+      try {
+        return await axios.post(process.env.VUE_APP_BASE_API + `/v1/event/respond/${id}`,{},{
+          headers: {
+            Authorization: `Bearer ${this.$cookies.get('jwt')}`,
+          }
+        }).then(() => {
+          this.$router.push('/events')
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  },
+  mounted() {
+    this.fetchEventById(this.id)
+  }
 }
 </script>
 
@@ -248,5 +293,19 @@ export default {
   &:not(:first-child) {
     margin-left: 15px;
   }
+}
+.btn {
+  padding: 10px;
+  background: #4E4BF2;
+  border:none;
+  font-family: 'Saira Condensed';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 110%;
+  text-align: center;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  cursor: pointer;
 }
 </style>

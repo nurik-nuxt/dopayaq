@@ -18,6 +18,7 @@
         <EventCard
             v-for="(event, index) in events"
             :key="index"
+            :id="event.id"
             :event-title="event.name"
             :location="event.location"
             :date="event.started_at"

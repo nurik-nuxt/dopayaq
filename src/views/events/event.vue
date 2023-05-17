@@ -85,6 +85,7 @@
       </div>
       <div style="display: flex; justify-content: center">
         <button class="btn" @click="inviteEvent(event.id)">Invite</button>
+        <button class="btn-cancel" @click="deleteEvent(event.id)">Cancel Event</button>
       </div>
     </div>
     <EventFooter/>
@@ -125,6 +126,19 @@ export default {
     async inviteEvent(id) {
       try {
         return await axios.post(process.env.VUE_APP_BASE_API + `/v1/event/respond/${id}`,{},{
+          headers: {
+            Authorization: `Bearer ${this.$cookies.get('jwt')}`,
+          }
+        }).then(() => {
+          this.$router.push('/events')
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    async deleteEvent(id) {
+      try {
+        return await axios.delete(process.env.VUE_APP_BASE_API + `/v1/event/${id}`,{
           headers: {
             Authorization: `Bearer ${this.$cookies.get('jwt')}`,
           }
@@ -307,5 +321,20 @@ export default {
   text-transform: uppercase;
   color: #FFFFFF;
   cursor: pointer;
+}
+.btn-cancel {
+  padding: 10px;
+  background: #E70E0E;
+  border:none;
+  font-family: 'Saira Condensed';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 110%;
+  text-align: center;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  cursor: pointer;
+  margin-left: 75px;
 }
 </style>

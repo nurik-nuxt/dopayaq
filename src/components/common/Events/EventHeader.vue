@@ -36,15 +36,15 @@ export default {
       menuList: [
         {
           key: 1,
-          title: 'Events'
+          title: 'Find'
         },
         {
           key: 2,
-          title: 'Create'
+          title: 'My Events'
         },
         {
           key: 3,
-          title: 'Help'
+          title: 'Profile'
         }
       ]
     }

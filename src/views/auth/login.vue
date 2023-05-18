@@ -32,8 +32,8 @@ export default {
   data() {
     return {
       form: {
-        email: '',
-        password: ''
+        email: null,
+        password: null
       }
     }
   },
@@ -41,7 +41,6 @@ export default {
     async login() {
       try {
         return await axios.post(process.env.VUE_APP_BASE_API + '/v1/profile/login',this.form).then( async(res) => {
-          console.log(res.data.token)
           this.$cookies.set('jwt', res.data.token)
           await this.$router.push('/events')
           return await axios.get(process.env.VUE_APP_BASE_API + '/v1/profile',{

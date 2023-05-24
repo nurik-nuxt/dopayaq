@@ -87,9 +87,14 @@
         <button v-show="idUser.ID !== event.usr.ID" class="btn" @click="inviteEvent(event.id)">Invite</button>
         <button v-show="idUser.ID === event.usr.ID" class="btn-cancel" @click="deleteEvent(event.id)">Cancel Event</button>
       </div>
-      <div>
-        Invites
-        <InviteCard/>
+      <h1 v-if="idUser.ID === event.usr.ID && event.not_confirmed_players">Requests</h1>
+      <div v-if="idUser.ID === event.usr.ID" class="request-list">
+        <RequestCard
+            v-for="(request, index) in event.not_confirmed_players"
+            :key="index"
+            :name="request.FirstName"
+            :id="request.ID"
+        />
       </div>
     </div>
     <EventFooter/>
@@ -101,6 +106,7 @@ import EventHeader from "@/components/common/Events/EventHeader";
 import EventFooter from "@/components/common/Events/EventFooter";
 import axios from "axios";
 import InviteCard from "@/components/common/InviteCard";
+import RequestCard from "@/components/common/RequestCard";
 export default {
   name: 'Event',
   data() {
@@ -116,7 +122,7 @@ export default {
       return this.$cookies.get('user')
     }
   },
-  components: {InviteCard, EventFooter, EventHeader},
+  components: {RequestCard, InviteCard, EventFooter, EventHeader},
   methods: {
     async fetchEventById(id) {
       try {
@@ -344,5 +350,12 @@ export default {
   color: #FFFFFF;
   cursor: pointer;
   margin-left: 75px;
+}
+.request-list{
+  margin-top: 38px;
+  display: grid;grid-template-columns: 1fr 1fr 1fr;
+  //grid-gap: 10px;
+  column-gap: 87px;
+  row-gap: 35px;
 }
 </style>

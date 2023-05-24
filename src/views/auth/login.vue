@@ -48,7 +48,7 @@ export default {
               Authorization: `Bearer ${this.$cookies.get('jwt')}`,
             }
           }).then((res) => {
-            this.$cookies.set('user',JSON.parse(res.data))
+            this.$cookies.set('user',res.data)
           })
         })
       } catch (e) {

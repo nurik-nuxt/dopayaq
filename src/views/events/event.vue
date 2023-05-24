@@ -9,7 +9,7 @@
             <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M43.75 43.75C43.75 43.75 43.75 41.1719 43.5352 39.8242C43.3594 38.7598 41.8848 37.3535 35.6152 35.0488C29.4434 32.7832 29.8242 33.8867 29.8242 29.7168C29.8242 27.0117 31.2012 28.584 32.0801 23.4473C32.4219 21.4258 32.6953 22.7734 33.4375 19.5312C33.8281 17.832 33.1738 17.7051 33.252 16.8945C33.3301 16.084 33.4082 15.3613 33.5547 13.7012C33.7305 11.6504 31.8262 6.25 25 6.25C18.1738 6.25 16.2695 11.6504 16.4551 13.7109C16.6016 15.3613 16.6797 16.0938 16.7578 16.9043C16.8359 17.7148 16.1816 17.8418 16.5723 19.541C17.3145 22.7734 17.5879 21.4258 17.9297 23.457C18.8086 28.5938 20.1855 27.0215 20.1855 29.7266C20.1855 33.9062 20.5664 32.8027 14.3945 35.0586C8.125 37.3535 6.64063 38.7695 6.47461 39.834C6.25 41.1719 6.25 43.75 6.25 43.75H25H43.75Z" fill="black"/>
             </svg>
-            <span style="color: #4E4BF2">IT Departure</span>
+            <span style="color: #4E4BF2">{{ event.name }}</span>
           </div>
           <div class="events-wrapper__event__item">
             <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -84,8 +84,12 @@
         </div>
       </div>
       <div style="display: flex; justify-content: center">
-        <button class="btn" @click="inviteEvent(event.id)">Invite</button>
-        <button class="btn-cancel" @click="deleteEvent(event.id)">Cancel Event</button>
+        <button v-show="idUser.ID !== event.usr.ID" class="btn" @click="inviteEvent(event.id)">Invite</button>
+        <button v-show="idUser.ID === event.usr.ID" class="btn-cancel" @click="deleteEvent(event.id)">Cancel Event</button>
+      </div>
+      <div>
+        Invites
+        <InviteCard/>
       </div>
     </div>
     <EventFooter/>
@@ -96,6 +100,7 @@
 import EventHeader from "@/components/common/Events/EventHeader";
 import EventFooter from "@/components/common/Events/EventFooter";
 import axios from "axios";
+import InviteCard from "@/components/common/InviteCard";
 export default {
   name: 'Event',
   data() {
@@ -106,9 +111,12 @@ export default {
   computed: {
     id() {
       return this.$route.params.id
+    },
+    idUser() {
+      return this.$cookies.get('user')
     }
   },
-  components: {EventFooter, EventHeader},
+  components: {InviteCard, EventFooter, EventHeader},
   methods: {
     async fetchEventById(id) {
       try {

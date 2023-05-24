@@ -21,7 +21,7 @@
             :id="event.id"
             :event-title="event.name"
             :location="event.location"
-            :date="event.started_at"
+            :date="event.start_date"
             :organizer="event.name"
         />
       </div>

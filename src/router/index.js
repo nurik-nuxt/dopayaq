@@ -7,7 +7,9 @@ import Registration from "@/views/auth/registration";
 import Login from "@/views/auth/login";
 import Events from "@/views/events";
 import Event from "@/views/events/event";
-import Create from "@/views/events/create"
+import Create from "@/views/events/create";
+import Profile from "@/views/profile"
+import MyEvents from "@/views/my-events";
 
 Vue.use(Router)
 
@@ -36,6 +38,11 @@ const router = new Router({
             component: Events
         },
         {
+            path: '/my-events',
+            name: 'my-events',
+            component: MyEvents
+        },
+        {
             path: '/event/:id',
             name: 'event',
             component: Event
@@ -44,6 +51,11 @@ const router = new Router({
             path: '/events/create',
             name: 'event-create',
             component: Create
+        },
+        {
+            path: '/profile',
+            name: 'profile',
+            component: Profile
         }
     ]
 })

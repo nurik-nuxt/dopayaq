@@ -1,5 +1,6 @@
 <template>
   <div class="base-input">
+    <span v-if="label">{{ label }}</span>
     <input class="base-input__input" :type="type" autocomplete="off" :value="value" :placeholder="placeholder" @input="handleInput"/>
   </div>
 </template>
@@ -15,14 +16,19 @@ export default {
   },
   props: {
     placeholder: {
-      type: String,
-      default: "sdfd"
+      type: String
     },
     value:{
       type:String
     },
-    type: String,
-    default: 'text'
+
+    type: {
+      type: String,
+      default: 'text'
+    },
+    label: {
+      type: String
+    }
   }
 }
 </script>
@@ -32,6 +38,20 @@ export default {
 .base-input {
   //margin: 0 auto;
   margin: 0 auto 35px auto;
+  display: flex;
+  flex-direction: column;
+  span {
+    margin-bottom: 10px;
+    font-family: 'Saira Condensed';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 110%;
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
+    color: #000000;
+  }
   &__input {
     padding: 9px 0;
     text-align: center;

@@ -2,7 +2,7 @@
   <div style="background: #F5F5F5;">
     <EventHeader/>
     <div class="events-wrapper">
-      <h1 class="events-wrapper--title">Find events</h1>
+      <h1 class="events-wrapper--title">My events</h1>
       <button class="events-wrapper--btn" @click="createEvent">Create</button>
       <div class="events-wrapper__eventList">
         <EventCard
@@ -28,7 +28,7 @@ import BaseTextField from "@/components/base/BaseTextField";
 import axios from "axios";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: 'Events',
+  name: 'MyEvents',
   data() {
     return {
       events: []
@@ -43,7 +43,11 @@ export default {
     async fetchEvents() {
       console.log("Fetch Events")
       try {
-        const events = await axios.get(process.env.VUE_APP_BASE_API + '/v1/event')
+        const events = await axios.get(process.env.VUE_APP_BASE_API + '/v1/event/created',{
+          headers: {
+            Authorization: `Bearer ${this.$cookies.get('jwt')}`,
+          }
+        })
         this.events = events.data
       } catch (e) {
         console.log(e)
@@ -147,18 +151,18 @@ export default {
     }
   }
   &--btn  {
-      padding: 10px;
-      background: #4E4BF2;
-      border:none;
-      font-family: 'Saira Condensed';
-      font-style: normal;
-      font-weight: 700;
-      font-size: 24px;
-      line-height: 110%;
-      text-align: center;
-      text-transform: uppercase;
-      color: #FFFFFF;
-      cursor: pointer;
-    }
+    padding: 10px;
+    background: #4E4BF2;
+    border:none;
+    font-family: 'Saira Condensed';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 110%;
+    text-align: center;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    cursor: pointer;
+  }
 }
 </style>

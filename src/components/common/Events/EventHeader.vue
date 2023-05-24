@@ -16,6 +16,7 @@
           v-for="(menuItem,index) in menuList"
           :key="index"
           class="header_wrapper__menu--item"
+          @click="goToMenu(menuItem.url)"
       >
         {{ menuItem.title }}
       </span>
@@ -36,15 +37,18 @@ export default {
       menuList: [
         {
           key: 1,
-          title: 'Find'
+          title: 'Find',
+          url: 'events'
         },
         {
           key: 2,
-          title: 'My Events'
+          title: 'My Events',
+          url:'my-events'
         },
         {
           key: 3,
-          title: 'Profile'
+          title: 'Profile',
+          url: 'profile'
         }
       ]
     }
@@ -61,6 +65,9 @@ export default {
     },
     goToMain() {
       this.$router.push('/')
+    },
+    goToMenu(url) {
+      this.$router.push(`/${url}`)
     }
   }
 }
@@ -93,6 +100,7 @@ export default {
       line-height: 110%;
       text-transform: uppercase;
       color: #FFFFFF;
+      cursor: pointer;
       &:not(:first-child) {
         margin-left: 40px;
       }

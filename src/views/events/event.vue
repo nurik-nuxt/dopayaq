@@ -84,8 +84,8 @@
         </div>
       </div>
       <div style="display: flex; justify-content: center">
-        <button v-show="idUser?.ID !== event.usr?.ID" class="btn" @click="inviteEvent(event.id)">Invite</button>
-        <button v-show="idUser?.ID === event.usr?.ID" class="btn-cancel" @click="deleteEvent(event.id)">Cancel Event</button>
+        <button v-show="idUser.ID !== event.usr.ID" class="btn" @click="inviteEvent(event.id)">Invite</button>
+        <button v-show="idUser.ID === event.usr.ID" class="btn-cancel" @click="deleteEvent(event.id)">Cancel Event</button>
       </div>
       <h1 v-if="idUser?.ID === event.usr?.ID">Requests</h1>
       <div v-if="idUser?.ID === event.usr?.ID" class="request-list">

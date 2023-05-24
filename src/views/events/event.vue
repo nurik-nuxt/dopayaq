@@ -84,16 +84,16 @@
         </div>
       </div>
       <div style="display: flex; justify-content: center">
-        <button v-show="idUser.ID !== event.usr.ID" class="btn" @click="inviteEvent(event.id)">Invite</button>
-        <button v-show="idUser.ID === event.usr.ID" class="btn-cancel" @click="deleteEvent(event.id)">Cancel Event</button>
+        <button v-show="idUser?.ID !== event.usr?.ID" class="btn" @click="inviteEvent(event.id)">Invite</button>
+        <button v-show="idUser?.ID === event.usr?.ID" class="btn-cancel" @click="deleteEvent(event.id)">Cancel Event</button>
       </div>
-      <h1 v-if="idUser.ID === event.usr.ID">Requests</h1>
-      <div v-if="idUser.ID === event.usr.ID" class="request-list">
+      <h1 v-if="idUser?.ID === event.usr?.ID">Requests</h1>
+      <div v-if="idUser?.ID === event.usr?.ID" class="request-list">
         <RequestCard
             v-for="(request, index) in event.not_confirmed_players"
             :key="index"
             :name="request.FirstName"
-            :id="request.ID"
+            :id="request?.ID"
         />
       </div>
     </div>
@@ -111,7 +111,12 @@ export default {
   name: 'Event',
   data() {
     return {
-      event: {}
+      event: {
+        name: 'AAA',
+        location: 'AAA',
+        format: 5,
+        description: 'AAA'
+      }
     }
   },
   computed: {
@@ -119,10 +124,10 @@ export default {
       return this.$route.params.id
     },
     idUser() {
-      return this.$cookies.get('user')
+      return this.$cookies?.get('user')
     }
   },
-  components: {RequestCard, InviteCard, EventFooter, EventHeader},
+  components: {RequestCard, EventFooter, EventHeader},
   methods: {
     async fetchEventById(id) {
       try {
@@ -164,8 +169,8 @@ export default {
       }
     }
   },
-  mounted() {
-    this.fetchEventById(this.id)
+  async mounted() {
+    await this.fetchEventById(this.id)
   }
 }
 </script>
